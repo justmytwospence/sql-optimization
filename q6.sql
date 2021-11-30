@@ -7,16 +7,28 @@ SET @v3 = 1828467;
 SET @v4 = 'MGT382';
 SET @v5 = 'Amber Hill';
 SET @v6 = 'MGT';
-SET @v7 = 'EE';			  
+SET @v7 = 'EE';
 SET @v8 = 'MAT';
 
 -- 6. List the names of students who have taken all courses offered by department v8 (deptId).
+
 -- SELECT name FROM Student,
 -- 	(SELECT studId
 -- 	FROM Transcript
 -- 		WHERE crsCode IN
 -- 		(SELECT crsCode FROM Course WHERE deptId = @v8 AND crsCode IN (SELECT crsCode FROM Teaching))
 -- 		GROUP BY studId
--- 		HAVING COUNT(*) = 
+-- 		HAVING COUNT(*) =
 -- 			(SELECT COUNT(*) FROM Course WHERE deptId = @v8 AND crsCode IN (SELECT crsCode FROM Teaching))) as alias
 -- WHERE id = alias.studId;
+
+-- Once again, a bottleneck here is an unnecessary cross join. There are also
+-- multiple subqueries that can be rewritten as joins.
+
+SELECT Student.name
+FROM Transcript
+LEFT JOIN Course USING (crsCode)
+LEFT JOIN Student on Transcript.studID = Student.id
+WHERE deptID = 'MAT'
+GROUP BY Student.name
+HAVING COUNT(*) = (SELECT COUNT(*) FROM Course WHERE deptId = 'MAT')
