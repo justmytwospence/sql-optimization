@@ -29,6 +29,6 @@ SELECT Student.name
 FROM Transcript
 LEFT JOIN Course USING (crsCode)
 LEFT JOIN Student on Transcript.studID = Student.id
-WHERE deptID = 'MAT'
+WHERE deptID = @v8
 GROUP BY Student.name
-HAVING COUNT(*) = (SELECT COUNT(*) FROM Course WHERE deptId = 'MAT')
+HAVING COUNT(*) = (SELECT COUNT(*) FROM Course WHERE deptId = @v8)

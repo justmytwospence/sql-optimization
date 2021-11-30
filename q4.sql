@@ -31,4 +31,4 @@ FROM Transcript
 LEFT JOIN Student ON Transcript.studId = Student.id
 LEFT JOIN Teaching USING (crsCode)
 LEFT JOIN Professor ON Teaching.profId = Professor.id
-WHERE Professor.name = 'Amber Hill';
+WHERE Professor.name = @v5;

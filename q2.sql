@@ -25,7 +25,7 @@ EXPLAIN SELECT name FROM Student WHERE id BETWEEN @v2 AND @v3;
 SELECT name
 FROM Student
 FORCE INDEX (Student_id_IDX)
-WHERE id BETWEEN 1145072 AND 1828467;
+WHERE id BETWEEN @v2 AND @v3;
 
 -- This does not appreciably improve the ~3ms run time of the query, however,
 -- suggesting that MySQL is correct to use a full table scan in this instance.
