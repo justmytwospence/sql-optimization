@@ -29,3 +29,8 @@ WHERE id BETWEEN @v2 AND @v3;
 
 -- This does not appreciably improve the ~3ms run time of the query, however,
 -- suggesting that MySQL is correct to use a full table scan in this instance.
+
+-- We also need to replace the BETWEEN syntax to make the range inclusive
+SELECT name
+FROM Student
+WHERE id >= @v2 AND id <= @v3;
